@@ -25,6 +25,7 @@ async function run() {
       await client.connect();
       const userCollection = client.db('allUsers').collection('users');
       const teacherCollection = client.db('allTeacher').collection('teachers');
+      const presentCollection = client.db('allStudent').collection('student');
     
 
         app.get('/student', async (req, res) =>{
@@ -43,7 +44,26 @@ async function run() {
     app.post('/teacher',  async(req, res) =>{
       const teacher = req.body;
       const result = await teacherCollection.insertOne(teacher);
-     
+      res.send(result);
+      })
+
+      app.get('/present', async (req, res) =>{
+        const present = await presentCollection.find().toArray();
+        res.send(present)
+      })
+      app.get('/absent', async (req, res) =>{
+        const absent = await presentCollection.find().toArray();
+      res.send(absent)
+      })
+
+    app.post('/present',  async(req, res) =>{
+      const present = req.body;
+      const result = await presentCollection.insertOne(present);
+      res.send(result);
+      })
+    app.post('/absent',  async(req, res) =>{
+      const absent = req.body;
+      const result = await presentCollection.insertOne(absent);
       res.send(result);
       })
 
