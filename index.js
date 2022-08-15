@@ -41,6 +41,12 @@ async function run() {
           })
 
       
+    app.post('/student',  async(req, res) =>{
+      const student = req.body;
+      const result = await userCollection.insertOne(student);
+      res.send(result);
+      })
+
     app.post('/teacher',  async(req, res) =>{
       const teacher = req.body;
       const result = await teacherCollection.insertOne(teacher);
